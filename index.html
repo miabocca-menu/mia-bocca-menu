@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mia Bocca メニュー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: the restaurant's own printed menu, made tappable — calm, legible, hospitable
+   IDEA: the laminated menu book on the table: cover first, then red serif section titles and photos
+   PICTURE: the real cover and the real dish photos, untouched
+   COLOUR and TYPE: menu paper white, heading red #9b1b30, brown footer band #6b3a1f, Hokkaido green accent; Mincho (Noto Serif JP/TC/SC)
+   LAYOUT: sticky language + section bar, card grid of dishes, tap opens a sheet with the 8 allergens */
+:root{color-scheme:light dark;--bg:light-dark(#fffdf8,#14110f);--card:light-dark(#fff,#211b18);--ink:light-dark(#221a16,#f3ebe3);--mute:light-dark(#6a5f57,#b5a89d);--red:light-dark(#b5001f,#ff6b7f);--brown:light-dark(#5a2e18,#3d2214);--green:light-dark(#00703a,#5fcf8d);--gtint:light-dark(#eef7f1,#16261c);--rtint:light-dark(#fdf0f1,#2a1619);--line:light-dark(#e8dfd4,#3a302a);--tri:light-dark(#c8102e,#ff8a8a);--flag:linear-gradient(90deg,#00923f 0 33.33%,#f4f1ea 33.33% 66.66%,#c8102e 66.66%)}
+.flag{height:5px;background:var(--flag)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;overflow-x:clip}
+html[lang=zh-Hant] body{font-family:"Noto Serif TC","Noto Serif JP",serif}
+html[lang=zh-Hans] body{font-family:"Noto Serif SC","Noto Serif JP",serif}
+html[lang=ko] body{font-family:"Noto Serif KR","Noto Serif JP",serif}.ko{font-family:"Noto Serif KR","Noto Serif JP",serif}
+.zt{font-family:"Noto Serif TC","Noto Serif JP",serif}.zs{font-family:"Noto Serif SC","Noto Serif JP",serif}
+html{scroll-padding-top:120px}
+button{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(8px);box-shadow:0 2px 10px -6px #0004}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px max(4vw,12px)}
+.logo{display:flex;flex-direction:column;line-height:1.15;white-space:nowrap}.logo strong{font-size:20px;color:var(--red);font-weight:700}.logo span{font-size:11px;letter-spacing:.04em;color:var(--green)}
+.langs{display:flex;gap:4px;flex-wrap:wrap}
+.langs button{min-height:40px;padding:0 11px;border:1.5px solid var(--green);background:var(--card);color:var(--green);border-radius:20px;font-size:14px;cursor:pointer;font-weight:600}
+.langs button[aria-pressed=true]{background:var(--green);color:#fff}
+button:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+.scroll{display:flex;gap:6px;overflow-x:auto;padding:6px max(4vw,12px) 10px;scrollbar-width:none}
+.scroll a{flex:none;text-decoration:none;color:var(--red);font-size:14px;font-weight:600;padding:8px 14px;border-radius:18px;background:var(--rtint);border:1.5px solid color-mix(in srgb,var(--red) 35%,transparent)}
+.scroll a:hover{background:var(--red);color:#fff}
+.scroll a.al{background:var(--green);color:#fff;border-color:var(--green)}
+.cover{display:block;text-align:center;max-width:680px;margin:0 auto;padding:clamp(20px,4vw,48px) max(4vw,16px)}
+.cover img{width:100%;border-radius:6px;box-shadow:0 18px 40px -18px #0006;display:block}
+.cover h1{font-size:clamp(24px,3.4vw,32px);line-height:1.2;margin:0 0 10px;color:var(--green);text-wrap:balance}
+.brand{display:block;width:min(300px,75%);margin:0 auto 18px;border-radius:8px;background:#fff;padding:10px}
+.welcome{font-size:17px;line-height:1.8;color:var(--ink)!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;margin:0 0 16px!important}
+.cover p{margin:0 0 12px;color:var(--mute)}
+.cta{display:inline-flex;align-items:center;min-height:50px;padding:0 26px;border-radius:25px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;box-shadow:0 6px 16px -8px var(--red)}
+.filter{max-width:1240px;margin:0 auto 8px;padding:16px max(4vw,16px);}
+.fbox{background:var(--gtint);border:1.5px solid color-mix(in srgb,var(--green) 40%,transparent);border-radius:12px;padding:16px 18px}
+.fbox h3{margin:0 0 4px;font-size:18px;color:var(--green)}.fbox p{margin:0 0 10px;font-size:14px;color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{min-height:44px;padding:0 15px;border-radius:22px;border:1.5px solid color-mix(in srgb,var(--green) 45%,transparent);background:var(--card);cursor:pointer;font-size:15px;font-weight:600}
+.chips button[aria-pressed=true]{background:var(--red);color:#fff;border-color:var(--red)}
+.chips button[aria-pressed=true]::before{content:'✕ '}
+.tri{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:14px}
+.tri input{width:22px;height:22px;accent-color:var(--red)}
+section.cat{max-width:1240px;margin:0 auto;padding:22px max(4vw,16px) 8px}
+.cat .flag{width:90px;height:4px;border-radius:2px;margin:0 0 12px}
+.cat h2{font-size:clamp(30px,5vw,42px);line-height:1.05;margin:0 0 4px;color:var(--red);font-weight:600;letter-spacing:.01em}
+.cat .sub{color:var(--green);margin:0 0 16px;font-size:15px;font-weight:600}
+section.cat+section.cat{border-top:1px solid var(--line);margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.item{all:unset;box-sizing:border-box;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 8px -6px #0003;overflow:hidden;cursor:pointer;transition:transform .15s,opacity .2s}
+.item:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.item:hover{transform:translateY(-2px);border-color:var(--green)}
+.item .ph{aspect-ratio:4/3;background:var(--line);overflow:hidden}
+.item .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.item .tx{padding:11px 13px 13px;display:flex;flex-direction:column;gap:3px;flex:1}
+.no{color:var(--red);font-size:14px}
+.nm{font-weight:600;font-size:16.5px;line-height:1.4}
+.jp{font-size:13px;color:var(--mute);line-height:1.45}
+.pr{margin-top:auto;padding-top:6px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px;flex-wrap:wrap}
+.yen{font-size:17px;font-weight:600;white-space:nowrap;color:var(--red)}.yen small{font-size:13px;color:var(--mute);font-weight:400}
+.dots{display:flex;gap:3px;flex-wrap:wrap}
+.dots span{font-size:13px;padding:1px 6px;border-radius:9px;background:var(--bg);border:1px solid var(--line);white-space:nowrap}
+.dots span.t{color:var(--tri);border-color:color-mix(in srgb,var(--tri) 40%,transparent)}
+.item.textonly .ph{display:none}
+.item.dim{opacity:.38}
+.item .warn{display:none;font-size:13px;color:#fff;background:var(--red);padding:3px 8px;border-radius:6px;align-self:flex-start}
+.item.dim .warn{display:inline-block}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:7px 6px;text-align:center;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--card);white-space:normal;min-width:180px;max-width:260px;border-right:1px solid var(--line)}
+thead th{background:var(--green);color:#fff;font-weight:600;font-size:13px}thead th:first-child{background:var(--green)}
+td.o{font-size:16px}td.t{color:var(--tri)}td.n{color:var(--mute)}
+tr.grp td{background:var(--rtint);color:var(--red);font-weight:600;text-align:left}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0;font-size:14px}
+.legend .t{color:var(--tri)}
+.note{font-size:14px;color:var(--mute);line-height:1.7}
+footer{margin-top:0;background:var(--brown);color:#f3e7dc;padding:22px max(4vw,16px);font-size:14px}
+footer div{max-width:1240px;margin:0 auto}
+#sheet{position:fixed;inset:0;z-index:50;display:none;background:#0008;align-items:flex-end;justify-content:center}
+#sheet.on{display:flex}
+.panel{background:var(--card);width:min(640px,100%);max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;animation:up .22s ease-out}
+@media(min-width:700px){#sheet{align-items:center}.panel{border-radius:14px}}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+@media(prefers-reduced-motion:reduce){.panel{animation:none}.item{transition:none}}
+.panel img{width:100%;max-height:340px;object-fit:cover;display:block}
+.pb{padding:16px 18px 22px}
+.pb h3{margin:2px 0 6px;font-size:22px;line-height:1.3}
+.names{margin:0 0 12px;font-size:14px;color:var(--mute);line-height:1.6}
+.agrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:12px 0}
+.agrid div{border:1px solid var(--line);border-radius:8px;padding:8px 4px;text-align:center;font-size:13px;line-height:1.3}
+.agrid b{display:block;font-size:22px;line-height:1.2;margin-bottom:2px}
+.agrid .o{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.agrid .t{border-color:var(--tri);color:var(--tri)}
+.agrid .n{color:var(--mute)}
+.close{position:sticky;top:8px;float:right;margin:8px 8px -52px 0;width:44px;height:44px;border-radius:22px;border:0;background:var(--red);color:#fff;font-size:22px;cursor:pointer;z-index:2}
+.unk{padding:12px;border:1px dashed var(--tri);border-radius:8px;color:var(--tri);font-size:14px}
+@media(max-width:600px){.cover{grid-template-columns:1fr}.cover img{max-width:420px;margin:0 auto}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.nm{font-size:15px}.item .tx{padding:9px 10px 11px}.top{flex-wrap:wrap;row-gap:6px}.logo{flex-direction:row;align-items:baseline;gap:8px}.logo strong{font-size:18px}.logo span{font-size:10px}.langs{width:100%;flex-wrap:nowrap;gap:4px}.langs button{flex:1;padding:0 4px;font-size:13px;min-height:38px}.agrid div{font-size:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><div class="logo"><strong>Mia Bocca</strong><span>HOKKAIDO ITALIAN</span></div><div class="langs" id="langs"></div></div>
+  <nav class="scroll" id="nav"></nav>
+  <div class="flag"></div>
+</header>
+
+<div class="cover">
+  <div>
+    <img class="brand" src="img/logo.png" alt="Mia Bocca 北海道イタリアンバル さいたま新都心店">
+    <p class="welcome" id="t-welcome"></p>
+    <h1 id="t-title"></h1>
+    <p id="t-lead"></p>
+    <a class="cta" href="#cold" id="t-cta"></a>
+  </div>
+</div>
+
+<div class="filter" id="allergy-filter">
+  <div class="fbox">
+    <h3 id="t-fh"></h3><p id="t-fp"></p>
+    <div class="chips" id="chips"></div>
+    <label class="tri"><input type="checkbox" id="incTri"><span id="t-tri"></span></label>
+  </div>
+</div>
+
+<main id="menu"></main>
+
+<section class="cat" id="table">
+  <div class="flag"></div><h2 id="t-th"></h2><p class="sub" id="t-ts"></p>
+  <div class="legend" id="legend"></div>
+  <div class="tablewrap"><table id="atable"></table></div>
+  <p class="note" id="t-disc"></p>
+</section>
+
+<div class="flag"></div><footer><div>Mia Bocca 北海道イタリアンバル ・ <span id="t-upd"></span> ・ Sendai &amp; Tokyo</div></footer>
+
+<div id="sheet" role="dialog" aria-modal="true"><div class="panel" id="panel"></div></div>
+
+<script>
+{
+const AL={ja:['えび','かに','くるみ','小麦','そば','卵','乳','落花生'],en:['Shrimp','Crab','Walnut','Wheat','Buckwheat','Egg','Milk','Peanut'],zt:['蝦','蟹','核桃','小麥','蕎麥','蛋','乳','花生'],zs:['虾','蟹','核桃','小麦','荞麦','蛋','乳','花生'],ko:['새우','게','호두','밀','메밀','달걀','우유','땅콩']};
+const UI={
+ja:{welcome:'ようこそ、ミア・ボッカへ。本日はご来店いただき、誠にありがとうございます。北海道の食材を使ったイタリアンを、どうぞごゆっくりお楽しみください。',title:'メニュー & アレルギー情報',lead:'料理をタップすると、特定原材料8品目(えび・かに・くるみ・小麦・そば・卵・乳・落花生)の使用状況が見られます。',cta:'メニューを見る',fh:'避けたい食材',fp:'選ぶと、その食材を原材料に使っている料理が薄く表示されます。',tri:'製造ラインの共有・接触(▲)がある料理も薄くする',th:'アレルギー一覧表',ts:'特定原材料 8品目',o:'原材料として使用しています',t:'原材料の製造ラインで共有・接触があります',n:'原材料として使用していません',tax:'税込',contains:'含まれています',unk:'この料理はアレルギー表に記載がありません。スタッフにお尋ねください。',all:'アレルギー表',other:'その他(表のみ記載)',upd:'アレルギー情報 更新日:2025/6/9',disc:'当店のアレルギー情報は、食品表示法で表示が義務付けられている8品目(特定原材料)を対象としています。当店では低アレルギーなどのアレルギー対応メニューのご提供はございません。店舗での調理では多くの食材を使用するため、他の食材に由来するアレルギー物質との接触(コンタミネーション/交差混入)があります。アレルゲンに対する感受性は個人によって大きく異なり、その時々の体調によっても異なります。ご利用の際は最新の情報を参考に、かかりつけの専門医にご相談のうえ、お客様ご自身でご判断ください。',close:'閉じる'},
+en:{welcome:'Welcome to Mia Bocca. Thank you very much for dining with us today. Please relax and enjoy our Italian cuisine made with ingredients from Hokkaido.',title:'Menu & Allergen Information',lead:'Tap any dish to see whether it contains the 8 specified allergens: shrimp, crab, walnut, wheat, buckwheat, egg, milk and peanut.',cta:'View the menu',fh:'Allergens to avoid',fp:'Dishes that use the selected ingredients will be dimmed.',tri:'Also dim dishes with shared production lines (▲)',th:'Allergen Chart',ts:'8 Specific Raw Materials',o:'Used as an ingredient',t:'Shared production line / possible contact',n:'Not used as an ingredient',tax:'tax incl.',contains:'Contains',unk:'This dish is not listed on the allergen chart. Please ask our staff.',all:'Allergen chart',other:'Others (chart only)',upd:'Allergen info updated: 9 Jun 2025',disc:'Our allergen information covers the 8 specific raw materials that Japanese food labeling law requires to be shown. We do not offer allergen-free menus. Because many ingredients are handled in our kitchen, cross-contact (contamination) with allergens from other ingredients may occur. Sensitivity differs greatly from person to person and with your condition on the day. Please consult your doctor and make your own judgment based on the latest information.',close:'Close'},
+zt:{welcome:'歡迎光臨 Mia Bocca。衷心感謝您今日的蒞臨。請慢慢享用以北海道食材製作的義大利料理。',title:'菜單與過敏原資訊',lead:'點選料理即可查看8種特定原材料(蝦、蟹、核桃、小麥、蕎麥、蛋、乳、花生)的使用情況。',cta:'查看菜單',fh:'想避免的食材',fp:'選擇後,使用該食材的料理會變淡顯示。',tri:'生產線共用・接觸(▲)的料理也變淡顯示',th:'過敏原一覽表',ts:'特定原材料 8項',o:'作為原料使用',t:'原料生產線有共用・接觸',n:'未作為原料使用',tax:'含稅',contains:'含有',unk:'此料理未列於過敏原表中,請洽詢店員。',all:'過敏原表',other:'其他(僅列於表中)',upd:'過敏原資訊更新日:2025/6/9',disc:'本店的過敏原資訊以日本食品標示法規定須標示的8項特定原材料為對象。本店不提供低過敏等過敏對應菜單。由於店內烹調使用多種食材,可能與其他食材來源的過敏物質接觸(交叉污染)。對過敏原的敏感度因人而異,也會因當時身體狀況而不同。請參考最新資訊,並諮詢您的主治醫師後自行判斷。',close:'關閉'},
+zs:{welcome:'欢迎光临 Mia Bocca。衷心感谢您今日的光临。请慢慢享用以北海道食材制作的意大利料理。',title:'菜单与过敏原信息',lead:'点击菜品即可查看8种特定原材料(虾、蟹、核桃、小麦、荞麦、蛋、乳、花生)的使用情况。',cta:'查看菜单',fh:'想避免的食材',fp:'选择后,使用该食材的菜品会变淡显示。',tri:'生产线共用・接触(▲)的菜品也变淡显示',th:'过敏原一览表',ts:'特定原材料 8项',o:'作为原料使用',t:'原料生产线有共用・接触',n:'未作为原料使用',tax:'含税',contains:'含有',unk:'此菜品未列于过敏原表中,请咨询店员。',all:'过敏原表',other:'其他(仅列于表中)',upd:'过敏原信息更新日:2025/6/9',disc:'本店的过敏原信息以日本食品标示法规定须标示的8项特定原材料为对象。本店不提供低过敏等过敏对应菜单。由于店内烹调使用多种食材,可能与其他食材来源的过敏物质接触(交叉污染)。对过敏原的敏感度因人而异,也会因当时身体状况而不同。请参考最新信息,并咨询您的主治医生后自行判断。',close:'关闭'},
+ko:{welcome:'Mia Bocca에 오신 것을 환영합니다. 오늘 방문해 주셔서 진심으로 감사드립니다. 홋카이도 식재료로 만든 이탈리안 요리를 편안하게 즐겨 주세요.',title:'메뉴 & 알레르기 정보',lead:'요리를 누르면 8가지 특정 원재료(새우, 게, 호두, 밀, 메밀, 달걀, 우유, 땅콩)의 사용 여부를 확인할 수 있습니다.',cta:'메뉴 보기',fh:'피하고 싶은 식재료',fp:'선택하면 해당 식재료를 원재료로 사용한 요리가 흐리게 표시됩니다.',tri:'제조 라인 공유·접촉(▲)이 있는 요리도 흐리게 표시',th:'알레르기 일람표',ts:'특정 원재료 8품목',o:'원재료로 사용하고 있습니다',t:'원재료 제조 라인에서 공유·접촉이 있습니다',n:'원재료로 사용하지 않습니다',tax:'세금 포함',contains:'포함',unk:'이 요리는 알레르기 표에 기재되어 있지 않습니다. 직원에게 문의해 주세요.',all:'알레르기 표',other:'기타(표에만 기재)',upd:'알레르기 정보 갱신일: 2025/6/9',disc:'당점의 알레르기 정보는 일본 식품표시법에서 표시가 의무화된 8품목(특정 원재료)을 대상으로 합니다. 당점에서는 저알레르기 등 알레르기 대응 메뉴를 제공하지 않습니다. 매장 조리 시 많은 식재료를 사용하므로 다른 식재료에서 유래한 알레르기 물질과의 접촉(교차 오염)이 있을 수 있습니다. 알레르겐에 대한 민감도는 개인에 따라 크게 다르며 그날의 컨디션에 따라서도 달라집니다. 최신 정보를 참고하시고 담당 전문의와 상담하신 후 고객님께서 직접 판단해 주시기 바랍니다.',close:'닫기'}};
+const CAT=[
+['cold','APPETIZER',{ja:'前菜《冷盤》',en:'Appetizer — Cold Dish',zt:'前菜《冷盤》',zs:'前菜《冷盘》',ko:'전채《콜드》'}],
+['hot','APPETIZER',{ja:'前菜《温菜》',en:'Appetizer — Hot Dish',zt:'前菜《熱食》',zs:'前菜《热食》',ko:'전채《핫》'}],
+['salad','INSALATA',{ja:'サラダ',en:'Salad',zt:'沙拉',zs:'沙拉',ko:'샐러드'}],
+['pasta','PASTA',{ja:'パスタ',en:'Pasta',zt:'義大利麵',zs:'意大利面',ko:'파스타'}],
+['pizza','PIZZA',{ja:'ピッツァ',en:'Pizza',zt:'披薩',zs:'披萨',ko:'피자'}],
+['meat','CARNE',{ja:'肉料理',en:'Meat',zt:'肉料理',zs:'肉菜',ko:'고기 요리'}],
+['risotto','RISOTTO',{ja:'リゾット',en:'Risotto',zt:'燉飯',zs:'烩饭',ko:'리조또'}],
+['dolce','DOLCE',{ja:'デザート',en:'Dessert',zt:'甜點',zs:'甜点',ko:'디저트'}]];
+// [no, cat, photo, allergens(えび,かに,くるみ,小麦,そば,卵,乳,落花生: o=●, t=▲, -=なし, null=表に記載なし), prices[[label,税抜,税込]], ja, en, zt, zs]
+const M=[
+[1,'cold','','---o----',[['',200,220]],'グリッシーニ','Grissini','格里西尼','格里西尼'],
+[2,'cold','c2','-------t',[['',500,550]],'ブロッコリーのガーリック風味','Garlic Flavored Broccoli','蒜香青花椰菜','蒜香西兰花'],
+[3,'cold','','--------',[['',400,440]],'イタリア産オリーブ盛り合わせ','Assorted Italian olives','橄欖拼盤','橄榄拼盘'],
+[4,'cold','','-------t',[['',500,550]],'ハーブ香るチキンとキノコのマリネ','Chicken and Mushrooms Marinated with Herb','酸漬香草鮮菇雞肉','酸爽香草鲜菇鸡肉'],
+[5,'cold','','--------',[['',500,550]],'キャロットラペ','French Grated Carrot Salad','胡蘿蔔絲沙拉','法式胡萝卜丝沙拉'],
+[6,'cold','','---o-oo-',[['',500,550]],'「下川六〇酵素卵」のアイオリソース','Hokkaido egg aioli sauce','北海道雞蛋蒜泥蛋黃醬','北海道鸡蛋蒜泥蛋黄酱'],
+[7,'cold','c7','-----oo-',[['',600,660]],'「下川六〇酵素卵」のフリッタータ','Frittata','義式煎蛋餅','意式煎蛋饼'],
+[8,'cold','c8','---o-to-',[['',790,869]],'ハム盛り合わせ(1人前)','Raw Ham Assortment (1 serving)','火腿拼盤(1份)','火腿拼盘(1份)'],
+[9,'cold','c9','---o-oo-',[['',790,869]],'チーズ盛り合わせ(1人前)','Cheese Assortment (1 serving)','奶酪拼盤(1份)','奶酪拼盘(1份)'],
+[10,'cold','','---o-oot',[['',990,1089]],'イタリア前菜8品盛り合わせ(1人前)','Assortment of 8 Italian appetizers (1 serving)','8種意大利開胃菜拼盤(1份)','8种意大利开胃菜拼盘(1份)'],
+[11,'cold','','---o-oo-',[['',1090,1199]],'北海道産水ダコのカルパッチョ マッシュポテトソース','Hokkaido Octopus Carpaccio with Mashed Potato Sauce','北海道章魚生牛肉片配土豆泥醬','北海道章鱼生牛肉片配土豆泥酱'],
+[12,'cold','c12','---o----',[['',1290,1419]],'北海道常呂産ホタテのカルパッチョ いくらを添えて','Carpaccio of Scallops from Tokoro, Hokkaido with Salmon Roe','加上北海道常呂產干貝(義式生魚片)和鮭魚卵','意式生拌北海道常呂产扇贝薄片配鲑鱼籽'],
+[1,'hot','','---o----',[['',200,220]],'北海道産小麦のフォカッチャ(1個)','Hokkaido wheat Focaccia (1 piece)','北海道小麥佛卡恰(1個)','北海道小麦佛卡恰(1个)'],
+[2,'hot','h2','---o-oo-',[['',400,440]],'北海道富良野産「ななつぼし」のライスコロッケ(1個)','Rice Croquette from Furano, Hokkaido (1 piece)','來自北海道富良野的“七星”米飯可樂餅(1個)','来自北海道富良野的“七星”米饭可乐饼(1个)'],
+[3,'hot','','---o-ot-',[['',690,759]],'揚げニョッキとソーセージ','Deep-Fried Gnocchi and Sausage Platter','法式炸薯條和香腸','炸薯条和香肠'],
+[4,'hot','h4','tt-o-tt-',[['',590,649]],'ナポリ名物!あおさのゼッポリーネ','Zeppoline','炒麵包','和炸面包'],
+[5,'hot','','---t-tt-',[['',690,759]],'北海道産フライドポテト','Fried Potato from Hokkaido','薯條','薯条'],
+[6,'hot','','o------t',[['',790,869]],'海老オーブン焼き(3尾)','Oven-Baked Shrimp (3 pieces)','烤大蝦(三隻)','烤大虾(3只)'],
+[7,'hot','h7','tt-o----',[['',1090,1199]],'北海道産つぶ貝のアヒージョ','Whelk Ajillo','北海道土豆泥大蒜油的味道','北海道土豆泥大蒜油的味道'],
+[8,'hot','','ot-o----',[['',1090,1199]],'ぷりぷり海老のアヒージョ','Shrimp Ajillo','蝦蒜油的味道','虾蒜油的味道'],
+[9,'hot','h9','---o-oo-',[['',1290,1419]],'北海道産カマンベールと4種チーズを使った白いラザニア','White lasagna with Camembert from Hokkaido and 4 kinds of cheese','白色千層面配北海道卡門貝爾奶酪和4種奶酪','白色千层面配北海道卡门贝尔奶酪和4种奶酪'],
+[10,'salad','','tt-o-oo-',[['S',890,979],['M',1090,1199]],'鶏むね肉の“白雪”シーザーサラダ','Caesar salad with chicken breast','凱薩雞胸肉沙拉','凯撒鸡胸肉沙拉'],
+[11,'salad','','------o-',[['S',790,869],['M',990,1089]],'3種ハムの贅沢サラダ','Luxury salad with 3 types of ham','豪華沙拉佐3種火腿','豪华沙拉配3种火腿'],
+[12,'salad','','o--o--o-',[['S',990,1089],['M',1190,1309]],'チーズたっぷり ぷりぷり海老とアボカドのサラダ','Shrimp and avocado salad','將奶酪撒在蝦和鱷梨沙拉上','将奶酪撒在虾和鳄梨沙拉上'],
+[13,'salad','s13','-o-o-oot',[['S',890,979],['M',1090,1199]],'紅ズワイガニのミモザサラダ','Salad with Red Snow Crab','紅楚蟹沙拉','红楚蟹沙拉'],
+[1,'pasta','p1','---o-oo-',[['',1090,1199]],'究極のぺぺたま!「農家のベーコン」と「下川六〇酵素卵」、ほうれん草のペペロンチーノ','Bacon and eggs, spinach peperoncino','奶油大蒜義大利麵配培根、蛋黃和菠菜','奶油大蒜意大利面配培根、蛋黄和菠菜'],
+[2,'pasta','','tt-o--o-',[['',1290,1419]],'北海道産水ダコと大葉のペペロンチーノ','Peperoncino with Hokkaido Octopus and Perilla','北海道產章魚與青紫蘇蒜辣義大利麵','北海道产章鱼和紫苏的蒜油辣椒意大利面'],
+[3,'pasta','','-t-o--o-',[['',1390,1529]],'北海道厚岸産アサリのボンゴレビアンコ','Vongole Bianco','義大利白酒蛤蜊麵','意大利白酒蛤蜊面'],
+[4,'pasta','p4','-o-o--ot',[['',1590,1749]],'紅ズワイガニとキノコのペペロンチーノ','Red snow crab and mushroom peperoncino','紅雪蟹和蘑菇','红雪蟹和蘑菇'],
+[5,'pasta','p5','ot-o--ot',[['',1590,1749]],'ぷりぷり海老とカラスミのペペロンチーノ','Plump Shrimp and Karasumi Peperoncino','肥美的蝦和烏魚子辣椒醬','肥美的虾和乌鱼子辣椒酱'],
+[6,'pasta','','---o--ot',[['',900,990]],'トマトとニンニクのスパゲティ','Tomato and Garlic Spaghetti','蕃茄大蒜','番茄大蒜'],
+[7,'pasta','','-t-o--o-',[['',1390,1529]],'北海道厚岸産アサリのボンゴレロッソ','Vongole Rosso','義大利紅醬蛤蜊麵','意大利红酱蛤蜊面'],
+[8,'pasta','','-t-o-to-',[['',1490,1639]],'「農家のベーコン」のアマトリチャーナ','Bacon amatriciana','培根和番茄醬','培根和番茄酱'],
+[9,'pasta','p9','---o-tot',[['',1690,1859]],'生モッツァレラチーズと「農家のベーコン」、茄子のトマトソース','Fresh mozzarella cheese and bacon, eggplant tomato sauce','新鮮的馬蘇里拉奶酪和培根,茄子番茄醬','新鲜的马苏里拉奶酪和培根,茄子番茄酱'],
+[10,'pasta','','---o-oo-',[['',1590,1749]],'「農家のベーコン」と「下川六〇酵素卵」のフィレンツェ風トマトソース','Florentine tomato sauce with bacon and eggs','佛羅倫薩番茄醬配培根和雞蛋','佛罗伦萨番茄酱配培根和鸡蛋'],
+[11,'pasta','p11','oo-o--ot',[['',1790,1969]],'名物!渡り蟹のトマトソース','Our Specialty! Blue Crab with Tomato Sauce','特產!梭子蟹 紅茄醬','特产!梭子蟹 红茄酱'],
+[12,'pasta','p12','---o-oo-',[['',1590,1749]],'「下川六〇酵素卵」の濃厚カルボナーラ','Carbonara with Tokachi Fresh Cream','培根蛋奶義麵','培根蛋奶意面'],
+[13,'pasta','p13','o--o-to-',[['',1690,1859]],'ぷりぷり海老とアボカドのトマトクリームソース','Shrimp and Avocado with Tomato Cream Sauce','酪梨蝦蕃茄奶麵','鳄梨虾番茄奶油面'],
+[14,'pasta','p14','---o-to-',[['',1790,1969]],'スモークサーモンといくら、ほうれん草のクリームソース','Pasta with Smoked Salmon and Salmon Roe with Spinach in White Sauce','燻鮭魚和鮭魚子菠菜奶油義大利麵','熏鲑鱼和鲑鱼子菠菜的奶油酱汁'],
+[15,'pasta','','---o-to-',[['',1690,1859]],'北海道産たらこ、ホタテ、ルッコラのクリームソース','Hokkaido Cod Roe, Scallop and Arugula with Cream Sauce','北海道產鱈魚籽、帆立貝、芝麻菜的奶油醬','北海道产鳕鱼籽、扇贝、芝麻菜的奶油酱'],
+[16,'pasta','p16','---o-oo-',[['',1790,1969]],'黒トリュフ香る「下川六〇酵素卵」の贅沢カルボナーラ','Luxury carbonara with black truffle-scented “Shimokawa Rokuo Koso Egg”','使用北海道雞蛋製成的高級義大利麵,散發著黑松露的香味','使用北海道鸡蛋制成的高级意大利面,散发着黑松露的香味'],
+[17,'pasta','p17','---o--o-',[['',1390,1529]],'北海道産たらことキノコの和風','Pasta with cod roe and mushrooms (Japanese style)','蘑菇義大利麵','蘑菇意面'],
+[18,'pasta','','---o-tot',[['',1690,1859]],'北海道産牛肉100%のミートソース','Hokkaido Beef Meat 100% Sauce','蕃茄北海道產牛肉100%醬','番茄北海道产牛肉100%酱'],
+[1,'pizza','z1','--to-to-',[['',1590,1749]],'北海道マルゲリータ','Margherita with Hokkaido Mozzarella Cheese','北海道產馬蘇里拉起司 瑪格麗特披薩','北海道产马苏里拉起司 玛格丽特披萨'],
+[2,'pizza','z2','--to-oo-',[['',1590,1749]],'「下川六〇酵素卵」の半熟卵カルボナーラピッツァ','Carbonara Pizza with Soft-Boiled Egg','培根蛋奶披薩佐溫泉蛋','培根蛋奶披萨配温泉蛋'],
+[3,'pizza','z3','--to-to-',[['',1790,1969]],'北海道産4種チーズを使ったとろ〜りピッツァ はちみつ添え','Pizza made with 4 types of Hokkaido cheese, served with honey','使用4種北海道起司製成的披薩,搭配蜂蜜','使用4种北海道奶酪制成的披萨,搭配蜂蜜'],
+[4,'pizza','z4','--to-to-',[['',1590,1749]],'生ハムとルッコラのピッツァ','Raw ham and arugula pizza','燻火腿和芝麻菜披薩','熏火腿和芝麻菜披萨'],
+[5,'pizza','z5','o-to-oot',[['',1590,1749]],'ぷりぷり海老たっぷりのピッツァ ジェノベーゼ','Genovese Pizza with lots of Shrimps','大量蝦仁熱那亞披薩','大量虾仁热那亚披萨'],
+[6,'pizza','','--to-to-',[['',1790,1969]],'スモークサーモンといくらのピッツァ','Smoked Salmon and Salmon Roe Pizza','燻鮭魚鮭魚子披薩','熏鲑鱼鲑鱼子披萨'],
+[7,'pizza','z7','--to-to-',[['',1790,1969]],'生ハムと北海道マルゲリータ','Prosciutto and Hokkaido Margherita','生火腿和北海道瑪格麗特披薩','生火腿和北海道玛格丽特披萨'],
+[8,'pizza','z8','--to-oo-',[['',1790,1969]],'黒トリュフ香る「下川六〇酵素卵」の贅沢カルボナーラピッツァ','Luxurious carbonara pizza with “Shimokawa Rokumaru Enzyme Egg” and the scent of black truffles','使用北海道雞蛋的豪華卡邦尼披薩','使用北海道鸡蛋制成的奢华卡邦尼披萨'],
+[9,'pizza','','--to-to-',[['',1790,1969]],'ハーフ&ハーフ:マルゲリータ&生ハムとルッコラのピッツァ','Half & Half: Margherita & Italian Prosciutto and Rocket Pizza','北海道產馬蘇里拉起司 瑪格麗特披薩、火腿芝麻菜披薩','北海道产马苏里拉奶酪 玛格丽特披萨、火腿芝麻菜披萨'],
+[10,'pizza','z10','o-to-oot',[['',1790,1969]],'ハーフ&ハーフ:マルゲリータ&ぷりぷり海老たっぷりのピッツァ ジェノベーゼ','Half & Half: Margherita & Genovese Pizza with lots of Shrimps','北海道產馬蘇里拉起司 瑪格麗特披薩、香蒜醬鮮蝦披薩','北海道产马苏里拉奶酪 玛格丽特披萨、香蒜酱鲜虾披萨'],
+[11,'pizza','','--to-to-',[['',1890,2079]],'ハーフ&ハーフ:マルゲリータ&北海道産4種チーズを使ったとろ〜りピッツァ はちみつ添え','Half & Half: Margherita & Four Kinds of Melty Cheese Pizza','瑪格麗特披薩,使用4種北海道奶酪製成的披薩,搭配蜂蜜','玛格丽特披萨,使用4种北海道奶酪制成的披萨,搭配蜂蜜'],
+[1,'meat','m1','------ot',[['',2990,3289]],'十勝若牛のタリアータ(約180g)','Beef loin tagliata (approx. 180 g)','牛肉烤菜','牛肉烤菜'],
+[2,'meat','m2','---o--o-',[['S 250g',1490,1639],['M 370g',1890,2079]],'若鶏のソテー小悪魔風 北海道産ポテト添え','Spicy Sautéed Chicken','辣味香煎嫩雞','香微辣煸炒笋鸡'],
+[3,'risotto','r3','---o-to-',[['',1490,1639]],'パルミジャーノチーズの特製リゾット','Special Risotto, Parmigiano cheese','特選義大利起司燉飯','特选意大利奶酪烩饭'],
+[4,'risotto','r4','---o-to-',[['',1790,1969]],'ポルチーニ茸のパルミジャーノチーズリゾット','Special risotto, Parmigiano cheese, with porcini mushrooms','特殊的意大利調味飯 帕瑪森芝士 配牛肝菌蘑菇','特殊的意大利调味饭 帕玛森芝士 配牛肝菌蘑菇'],
+[1,'dolce','',null,[['',590,649]],'アイス2種盛り合わせ','Assortment of two kinds of ice cream','兩種冰淇淋拼盤','两种冰淇淋拼盘'],
+[2,'dolce','','------o-',[['',890,979]],'十勝ジャージー カッサータ','Tokachi Jersey Cassata Sponge Cake','十勝Jersey 卡薩塔蛋糕','十胜娟姗牛 卡萨塔蛋糕'],
+[3,'dolce','','-----oo-',[['',690,759]],'北海道チーズぷりん','Hokkaido Cheese Pudding','北海道起司布丁','北海道奶酪布丁'],
+[4,'dolce','','---o-oo-',[['',690,759]],'自家製ガトーショコラ ベリーソース','House-Made Chocolate Cake with Berry Sauce','自家製巧克力蛋糕 佐莓果醬','自制巧克力蛋糕配莓果酱'],
+[5,'dolce','d5','-----to-',[['',690,759]],'天使の羽添え アッフォガート','Affogato','阿法奇朵','阿芙佳朵'],
+[6,'dolce','d6','---o-oo-',[['',690,759]],'自家製ティラミス','Tiramisu','提拉米蘇','提拉米苏'],
+[7,'dolce','d7','--to-oot',[['',1290,1419]],'デザート盛り合わせ','Dolce Misto','甜品拼盤','甜品拼盘']];
+// 表のみに記載
+const KO=["그리시니", "브로콜리 갈릭 풍미", "이탈리아산 올리브 모둠", "허브 향 치킨과 버섯 마리네", "캐럿 라페(당근 샐러드)", "'시모카와 로쿠마루 효소 달걀' 아이올리 소스", "'시모카와 로쿠마루 효소 달걀' 프리타타", "햄 모둠 (1인분)", "치즈 모둠 (1인분)", "이탈리아 전채 8종 모둠 (1인분)", "홋카이도산 문어 카르파초 매시드 포테이토 소스", "홋카이도 도코로산 가리비 카르파초 연어알 곁들임", "홋카이도산 밀 포카치아 (1개)", "홋카이도 후라노산 '나나츠보시' 라이스 크로켓 (1개)", "뇨키 튀김과 소시지", "나폴리 명물! 파래 체폴리네", "홋카이도산 감자튀김", "새우 오븐구이 (3마리)", "홋카이도산 소라 아히요", "탱글탱글 새우 아히요", "홋카이도산 카망베르와 4종 치즈 화이트 라자냐", "닭가슴살 '시라유키' 시저 샐러드", "3종 햄 프리미엄 샐러드", "치즈 듬뿍 탱글탱글 새우와 아보카도 샐러드", "홍게 미모사 샐러드", "궁극의 페페타마! '농가 베이컨'과 '시모카와 로쿠마루 효소 달걀', 시금치 페페론치노", "홋카이도산 문어와 차조기 페페론치노", "홋카이도 앗케시산 바지락 봉골레 비안코", "홍게와 버섯 페페론치노", "탱글탱글 새우와 카라스미(어란) 페페론치노", "토마토 마늘 스파게티", "홋카이도 앗케시산 바지락 봉골레 로소", "'농가 베이컨' 아마트리치아나", "생모차렐라 치즈와 '농가 베이컨', 가지 토마토소스", "'농가 베이컨'과 '시모카와 로쿠마루 효소 달걀' 피렌체풍 토마토소스", "명물! 꽃게 토마토소스", "'시모카와 로쿠마루 효소 달걀' 진한 카르보나라", "탱글탱글 새우와 아보카도 토마토크림소스", "훈제연어와 연어알, 시금치 크림소스", "홋카이도산 명란, 가리비, 루콜라 크림소스", "블랙 트러플 향 '시모카와 로쿠마루 효소 달걀' 프리미엄 카르보나라", "홋카이도산 명란과 버섯 일본풍 파스타", "홋카이도산 소고기 100% 미트소스", "홋카이도 마르게리타", "'시모카와 로쿠마루 효소 달걀' 반숙 달걀 카르보나라 피자", "홋카이도산 4종 치즈 피자 꿀 곁들임", "생햄과 루콜라 피자", "탱글탱글 새우 듬뿍 제노베제 피자", "훈제연어와 연어알 피자", "생햄 홋카이도 마르게리타", "블랙 트러플 향 '시모카와 로쿠마루 효소 달걀' 프리미엄 카르보나라 피자", "하프&하프: 마르게리타 & 생햄과 루콜라 피자", "하프&하프: 마르게리타 & 새우 듬뿍 제노베제 피자", "하프&하프: 마르게리타 & 홋카이도산 4종 치즈 피자 꿀 곁들임", "도카치산 어린 소고기 탈리아타 (약 180g)", "영계 소테 디아볼라풍, 홋카이도산 감자 곁들임", "파르미자노 치즈 특제 리조또", "포르치니 버섯 파르미자노 치즈 리조또", "아이스크림 2종 모둠", "도카치 저지 카사타", "홋카이도 치즈 푸딩", "수제 가토 쇼콜라 베리 소스", "천사의 날개 아포가토", "수제 티라미수", "디저트 모둠"];
+M.forEach((d,i)=>d.push(KO[i]));
+const EX=[['北海道産ポークのテリーヌ','-----o--'],['バターホイップ(フライドポテト用トッピング)','------o-'],['バゲット(4枚)','---o----'],['「農家のベーコン」と黒トリュフのカルボリゾット','---o-oo-'],['バニラアイス','-----to-']];
+const LANGS=[['ja','日本語','ja'],['en','English','en'],['zt','繁體','zh-Hant'],['zs','简体','zh-Hans'],['ko','한국어','ko']];
+const LI={ja:5,en:6,zt:7,zs:8,ko:9};
+let lang='ja',avoid=new Set(),incTri=false;
+try{const s=localStorage.getItem('hi-lang');if(s&&LI[s])lang=s}catch(e){}
+// ?lang=ja|en|zh-Hant|zh-Hans|ko (also zt/zs) — used by the per-language QR codes
+{const p=new URLSearchParams(location.search).get('lang');const m=p&&LANGS.find(l=>l[0]===p||l[2].toLowerCase()===p.toLowerCase());if(m)lang=m[0]}
+function syncUrl(){try{const u=new URL(location.href);u.searchParams.set('lang',LANGS.find(l=>l[0]===lang)[2]);history.replaceState(null,'',u)}catch(e){}}
+const $=id=>document.getElementById(id);
+const yen=n=>'¥'+n.toLocaleString('en-US');
+const mark=c=>c==='o'?'●':c==='t'?'▲':'—';
+const cls=c=>c==='o'?'o':c==='t'?'t':'n';
+function hit(a){if(!a)return false;for(const i of avoid){if(a[i]==='o'||(incTri&&a[i]==='t'))return true}return false}
+function card(d,i){const [no,,ph,a,pr]=d;const nm=d[LI[lang]];
+ const dots=a?[...a].map((c,k)=>c==='-'?'':`<span class="${c==='t'?'t':''}">${mark(c)}${AL[lang][k]}</span>`).join(''):'<span class="t">?</span>';
+ const price=pr.map(p=>`${p[0]?p[0]+' ':''}${yen(p[1])} <small>(${UI[lang].tax} ${yen(p[2])})</small>`).join('<br>');
+ return `<button class="item${ph?'':' textonly'}${hit(a)?' dim':''}" data-i="${i}">
+ <div class="ph">${ph?`<img src="img/${ph}.jpg" alt="" loading="lazy">`:''}</div>
+ <div class="tx"><span class="no">${'①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱'[no-1]}</span><span class="warn">${UI[lang].contains}</span>
+ <span class="nm ${lang}">${nm}</span>${lang!=='ja'?`<span class="jp">${d[5]}</span>`:''}
+ <div class="pr"><span class="yen">${price}</span></div><div class="dots">${dots}</div></div></button>`}
+function render(){
+ const u=UI[lang];document.documentElement.lang=LANGS.find(l=>l[0]===lang)[2];
+ for(const k of ['welcome','title','lead','cta','fh','fp','tri','th','ts','disc','upd'])$('t-'+k).textContent=u[k];
+ $('langs').innerHTML=LANGS.map(l=>`<button data-l="${l[0]}" aria-pressed="${l[0]===lang}">${l[1]}</button>`).join('');
+ $('nav').innerHTML=CAT.map(c=>`<a href="#${c[0]}">${c[2][lang]}</a>`).join('')+`<a class="al" href="#table">${u.all}</a>`;
+ $('chips').innerHTML=AL[lang].map((n,k)=>`<button data-k="${k}" aria-pressed="${avoid.has(k)}">${n}</button>`).join('');
+ $('incTri').checked=incTri;
+ $('menu').innerHTML=CAT.map(c=>`<section class="cat" id="${c[0]}"><div class="flag"></div><h2>${c[1]}</h2><p class="sub">${c[2][lang]}</p><div class="grid">${M.map((d,i)=>d[1]===c[0]?card(d,i):'').join('')}</div></section>`).join('');
+ $('legend').innerHTML=`<span>● ${u.o}</span><span class="t">▲ ${u.t}</span><span>— ${u.n}</span>`;
+ const row=(nm,a)=>`<tr><td>${nm}</td>${a?[...a].map(c=>`<td class="${cls(c)}">${mark(c)}</td>`).join(''):`<td colspan="8" class="t">${u.unk}</td>`}</tr>`;
+ $('atable').innerHTML=`<thead><tr><th></th>${AL[lang].map(n=>`<th>${n}</th>`).join('')}</tr></thead><tbody>`+CAT.map(c=>`<tr class="grp"><td colspan="9">${c[2][lang]}</td></tr>`+M.filter(d=>d[1]===c[0]).map(d=>row(d[LI[lang]]+(lang!=='ja'?`<br><span class="jp">${d[5]}</span>`:''),d[3])).join('')).join('')+`<tr class="grp"><td colspan="9">${u.other}</td></tr>`+EX.map(e=>row(e[0],e[1])).join('')+'</tbody>';
+}
+function open(i){const d=M[i],u=UI[lang],a=d[3];
+ const names=LANGS.filter(l=>l[0]!==lang).map(l=>`<span class="${l[0]}">${d[LI[l[0]]]}</span>`).join('<br>');
+ const grid=a?`<div class="agrid">${[...a].map((c,k)=>`<div class="${cls(c)}"><b>${mark(c)}</b>${AL[lang][k]}</div>`).join('')}</div>`:`<p class="unk">${u.unk}</p>`;
+ $('panel').innerHTML=`<button class="close" aria-label="${u.close}">×</button>${d[2]?`<img src="img/${d[2]}.jpg" alt="">`:''}<div class="pb"><span class="no">${CAT.find(c=>c[0]===d[1])[1]} ${'①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱'[d[0]-1]}</span><h3>${d[LI[lang]]}</h3><p class="names">${names}</p><div class="yen">${d[4].map(p=>`${p[0]?p[0]+' ':''}${yen(p[1])} <small>(${u.tax} ${yen(p[2])})</small>`).join('<br>')}</div>${grid}<div class="legend"><span>● ${u.o}</span><span class="t">▲ ${u.t}</span><span>— ${u.n}</span></div><p class="note">${u.disc}</p></div>`;
+ $('sheet').classList.add('on');document.body.style.overflow='hidden';$('panel').querySelector('.close').focus()}
+let last=null;
+function close(){$('sheet').classList.remove('on');document.body.style.overflow='';if(last)last.focus()}
+document.addEventListener('click',e=>{
+ const L=e.target.closest('[data-l]');if(L){lang=L.dataset.l;try{localStorage.setItem('hi-lang',lang)}catch(x){}syncUrl();render();return}
+ const K=e.target.closest('[data-k]');if(K){const k=+K.dataset.k;avoid.has(k)?avoid.delete(k):avoid.add(k);render();return}
+ const I=e.target.closest('.item');if(I){last=I;open(+I.dataset.i);return}
+ if(e.target.closest('.close')||e.target.id==='sheet')close()});
+$('incTri').addEventListener('change',e=>{incTri=e.target.checked;render()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('sheet').classList.contains('on'))close()});
+render();
+}
+</script>
+</body>
+</html>
